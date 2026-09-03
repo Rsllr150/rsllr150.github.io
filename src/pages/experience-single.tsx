@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Nav } from "@/components/nav"
 import { ExperienceImageCard } from "@/components/experience-image-card"
 import { ExperienceFigures } from "@/components/experience-figures"
+import { ResumeChip } from "@/components/resume-chip"
 import { experienceDetails, getExperienceBySlug } from "@/data/experience-detail"
 import { resolveProjectAssetHref } from "@/data/project-detail"
 import { site } from "@/data/site"
@@ -80,7 +81,10 @@ export default function ExperienceSinglePage({ slug }: Props) {
               </span>
             ))}
           </p>
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">{site.name}</h1>
+          <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-3">
+            <h1 className="whitespace-nowrap text-3xl font-bold tracking-tight text-foreground">{site.name}</h1>
+            <ResumeChip className="mt-1.5" />
+          </div>
         </header>
 
         <article>

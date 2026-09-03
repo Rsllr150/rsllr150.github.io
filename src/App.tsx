@@ -9,6 +9,7 @@ import { projectDetails, resolveProjectAssetHref } from "@/data/project-detail"
 import { site } from "@/data/site"
 import { ProjectDownloadLinks } from "@/components/project-download-links"
 import DecryptedText from "@/components/decrypted-text"
+import { ResumeChip } from "@/components/resume-chip"
 
 const PixelBlast = lazy(() => import("@/components/pixel-blast"))
 
@@ -45,20 +46,25 @@ function App() {
 
         {/* Header */}
         <header className="mb-20">
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">
-            <DecryptedText
-              text={site.name}
-              animateOn="view"
-              sequential
-              revealDirection="start"
-              speed={42}
-              maxIterations={14}
-              parentClassName="inline"
-              className="text-foreground"
-              encryptedClassName="text-foreground/40"
-            />
-          </h1>
-          <p className="mt-2 text-sm text-muted-foreground">{site.tagline}</p>
+          <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-3">
+            <div>
+              <h1 className="whitespace-nowrap text-3xl font-bold tracking-tight text-foreground">
+                <DecryptedText
+                  text={site.name}
+                  animateOn="view"
+                  sequential
+                  revealDirection="start"
+                  speed={42}
+                  maxIterations={14}
+                  parentClassName="inline"
+                  className="text-foreground"
+                  encryptedClassName="text-foreground/40"
+                />
+              </h1>
+              <p className="mt-2 text-sm text-muted-foreground">{site.tagline}</p>
+            </div>
+            <ResumeChip className="mt-1.5" />
+          </div>
           <dl className="mt-4 grid grid-cols-[5.5rem_1fr] items-baseline gap-x-3 gap-y-1.5 text-sm">
             <dt className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-foreground/40">
               Schools
