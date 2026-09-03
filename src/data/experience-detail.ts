@@ -33,26 +33,27 @@ export type ExperienceDetail = {
 export const experienceDetails: ExperienceDetail[] = [
   {
     slug: "cirkles",
-    title: "Founding Engineer",
+    title: "Founding Software Engineer",
     org: "Cirkles.ai",
-    location: "Paris, France",
-    duration: "June 2025 — Present",
-    blurb: "ML fraud detection. Platform to fight and prevent financial fraud with ML.",
-    constraint: "You fight fraud by understanding it — a score without a why does not get used.",
+    location: "Paris, France (Remote)",
+    duration: "July 2025 — Present",
+    blurb: "Founding team of an AI fraud-detection SaaS for leasing and banking — backend, data, and AI, end to end.",
+    constraint: "Early-stage means the whole product is your surface — the backend, the data, the model, and the client call.",
     metrics: [],
     owned: [
-      "ML core: Explainable Boosting Machine + rules, with a why on every decision",
-      "Data pipelines and scraping that feed the model; document parse (IBAN, fields) as one input",
-      "Technical, security and compliance documentation for regulated institutions",
-      "Secrets management hardening",
-      "MCP into the Cirkles platform; client feedback back into the product",
+      "Backend architecture in FastAPI, and the database design that holds the data securely",
+      "Data engineering and web scraping pipelines that feed the detection systems",
+      "Model research on the AI side — fraud detection that has to hold up in real banking scenarios",
+      "Direct client work, turning feedback into product decisions",
+      "An MCP (Model Context Protocol) tool integrated into the main Cirkles platform",
     ],
     description:
-      "I joined Cirkles.ai as part of the founding team and have been building the product from day one. Cirkles is an AI fraud-detection SaaS for leasing and banking. Stack: Python, FastAPI, MongoDB, Kubernetes (Helm, Terraform, ArgoCD).\n\n" +
-      "Being there since the start means the work spans the product, not a single ticket. I own the ML layer: an Explainable Boosting Machine — additive feature contributions, shape functions you can plot — and a declarative rules engine for cuts and overrides, so an analyst can see what moved the score and which rule fired. Data engineering and scraping pipelines feed that system. A document-processing slice (parse, IBAN checks, field extraction) sits on the same path and nourishes the model; it is not a separate tool.\n\n" +
-      "I also chip in on the frontend when the product needs it — not as the owner of that surface, just enough to keep the stack one piece. A large part of the technical documentation is mine as well — guides, internal references, and the security and compliance write-ups regulated institutions ask for — and I helped harden secrets management. I work directly with clients, turn their feedback into product decisions, and my current focus is an MCP (Model Context Protocol) integration into the Cirkles platform.\n\n" +
-      "The through-line is taking a complex AI idea and turning it into a live product people actually run.",
-    tags: ["FastAPI", "MCP", "EBM", "Feature engineering", "Kubernetes", "OVH"],
+      "I joined Cirkles.ai from the very beginning, as part of the founding team. We are building an AI fraud-detection SaaS designed specifically for leasing and banking companies. It is a really exciting environment: we are now actively deploying our production product to our first clients.\n\n" +
+      "Being there since day one means I got to participate in building the entire software product from end to end. Because it is an early-stage startup, my technical work covers a lot of different areas. I built the backend architecture using FastAPI and designed the databases that handle the information securely. A large part of my time went into data engineering and web scraping — gathering and shaping the data our systems actually run on.\n\n" +
+      "On the AI side I was involved in model research, making sure our fraud-detection algorithms are accurate and ready for real-world banking scenarios rather than only for a clean dataset. Besides the pure engineering work, I interact directly with our clients: it is how I learn what the product is missing, and their feedback is what decides where it goes next.\n\n" +
+      "Most recently, my main focus has been developing an MCP (Model Context Protocol) tool to integrate directly into our main Cirkles software platform.\n\n" +
+      "This role has given me incredible hands-on experience in the thing I care about most: taking a complex AI idea and turning it into a live product that companies actually pay for and use.",
+    tags: ["FastAPI", "AI", "SaaS", "Data Engineering", "MCP"],
     gallery: [],
   },
   {
