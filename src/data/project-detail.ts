@@ -65,7 +65,7 @@ export const projectDetails: ProjectDetail[] = [
     tags: ["Time Series", "KNN", "XGBoost", "Python"],
     posterHref: "papers/enedis-data-challenge-poster.pdf",
     abstract:
-      "Not a weekend hackathon. Challenge Data is the ENS platform: a real industrial problem, weeks of work, a public leaderboard, one number. Enedis needs to fill holes in Linky load curves without touching real customers (GDPR) — ~69k synthetic series, 1k with artificial gaps, 48 points/day. With Seyf I reconstructed the missing 30-minute measurements from other series only. Statistical, gradient-boosted, and deep models were all on the table — the submission that ranked is a two-regime hybrid.",
+      "Not a weekend hackathon. Challenge Data is the ENS platform: a real industrial problem, weeks of work, a public leaderboard, one number. Enedis needs to fill holes in Linky load curves without touching real customers (GDPR) — ~69k synthetic series, 1k with artificial gaps, 48 points/day. I reconstructed the missing 30-minute measurements from other series only. Statistical, gradient-boosted, and deep models were all on the table — the submission that ranked is a two-regime hybrid.",
     problem:
       "Gap length is heavy-tailed: most holes are 1–2 steps (30–60 min), but the rare multi-hour holes dominate missing volume. Mean inter-series correlation is 0.066, so global factorizations fail. Load is skewed (μ = 354 kW, median = 173 kW, skewness = 2.13): distance methods on raw amplitudes chase the largest clients, not the shape of the curve.",
     approach:
@@ -99,7 +99,7 @@ export const projectDetails: ProjectDetail[] = [
     tags: ["Numba", "Finite Differences", "Acoustics", "Python"],
     paperHref: "papers/high-order-acoustics-paper.pdf",
     abstract:
-      "With Seyf and Gabin I built a 7th-order one-step finite-difference solver for linearized Euler acoustics. Validate the flux on 1D advection, lift it to heterogeneous 1D through Riemann invariants plus conservative corrections, then to 2D by alternating-direction Strang splitting. The kernel runs under Numba.",
+      "I built a 7th-order one-step finite-difference solver for linearized Euler acoustics. Validate the flux on 1D advection, lift it to heterogeneous 1D through Riemann invariants plus conservative corrections, then to 2D by alternating-direction Strang splitting. The kernel runs under Numba.",
     problem:
       "Long-range acoustics dies on first-order Roe: truncation error acts like fake viscosity. After 50 m a wave packet has lost more than 80% of its amplitude; after 500 m it is gone. OS7 keeps energy but Gibbs-rings on discontinuities. Variable density ρ_m(x) makes the system non-conservative, so a single global flux does not exist. A naïve 2D 7×7 stencil is too expensive.",
     approach:
@@ -127,18 +127,18 @@ export const projectDetails: ProjectDetail[] = [
   {
     slug: "botbot",
     title: "BotBot",
-    subtitle: "Concurrent checkout automation for live-event ticketing",
+    subtitle: "Fault-tolerant browser-worker fleet — hundreds of isolated sessions inside a window that lasts minutes",
     year: "2025–2026",
     venue: "Personal systems project",
     tags: ["Playwright", "asyncio", "Azure", "FastAPI"],
     abstract:
-      "A worker fleet that turns a CSV of checkout tasks into isolated browser sessions, classifies failures, and emits cart events onto a signed bus. Built for live-event ticketing: short windows, flaky pages, and a control plane that can bind an event URL at open time.",
+      "A concurrent worker fleet that turns a job queue into isolated browser sessions, classifies every failure, and leaves a reproducible artifact when one fails. The scarce resource is not CPU — it is a worker inside a window that closes in minutes, so most of the engineering is about not wasting one.",
     problem:
-      "Live-event checkout is a bursty distributed-systems problem. Hundreds of rows share a few minutes. Failures are not equal: retrying a closed sale wastes a worker; retrying a timeout on the same network path usually fails the same way. Parallel browser sessions cannot share a single egress without colliding. Some event URLs are not public until the window opens, so the job queue has to accept a late bind.",
+      "Burst load turns ordinary choices into expensive ones. Hundreds of jobs share a few minutes, and a worker spent on the wrong retry is gone for the rest of the window. Failures are not interchangeable: a page that will never succeed and a timeout that would succeed on a second attempt demand opposite policies, and treating them alike burns the fleet either way. Two constraints follow from the concurrency itself. Parallel browser sessions cannot share one network path without interfering. And some targets are not addressable until the window opens, so the queue has to accept a job whose required parameter does not exist yet.",
     approach:
-      "Python 3.11, asyncio semaphore, Playwright (headed or headless). The CSV is the job queue; a Discord slot is late-binding for PENDING rows. Each worker owns one session and one network path. Errors are classified: terminal (artifact, next row), transient (fresh egress, bounded retries), fast-recovery (short backoff, keep the worker). Sinks are JSONL run files, a token-gated FastAPI webhook, and a cart API. Ship as Docker to Azure Container Instances — private ACR, Azure Files for CSV and artifacts, 1 GiB shm for Chromium, 60 s graceful stop.",
+      "Python 3.11 and Playwright, with an asyncio semaphore as the explicit concurrency bound and asyncio.gather(return_exceptions=True) so one crashed worker never takes the batch down with it. Each worker owns exactly one session and one network path, which makes isolation structural rather than advisory. Failures fall into three classes with three policies: terminal (write the artifact, move to the next job), transient (bounded retries on a fresh path), and fast-recovery (short backoff, keep the worker warm) — the retry budget is capped in config, not left to chance. Late binding is its own subsystem: a 507-line listener holds PENDING jobs whose target is unknown at launch and binds it the moment the window opens. A forensics layer makes a failure reproducible long after it happened — HTML capped at 2 MB so a huge page cannot fill the disk, a screenshot, and a DOM inventory. Configuration is read through bounded helpers that clamp every value to a valid range instead of trusting the environment. Shipped as Docker to Azure Container Instances: private registry, mounted storage for the queue and the artifacts, 1 GiB shm for Chromium, 60 s graceful stop.",
     outcome:
-      "Repeatable batch runs with per-row success/failure artifacts, structured logs, and tests around config, retries, and session selection. The interesting surface is the control plane — isolation, classification, deploy — not the click path.",
+      "21 modules and roughly 5,700 lines of Python behind one CLI, with 8 test suites aimed at the parts that actually break — retry logic, config bounds, session selection, URL handling. Runs are repeatable and every failed job leaves something you can open after the window has closed. The transferable surface is the control plane: an explicit concurrency bound, a failure taxonomy where the retry policy follows the class, deferred binding of a required parameter, and forensics treated as a first-class output rather than an afterthought.",
     gallery: [
       { id: "bb1", caption: "Control plane — fan-out, workers, sinks", imageHref: "images/projects/botbot/1.png" },
       { id: "bb2", caption: "Failure classification — terminal / transient / fast-recovery", imageHref: "images/projects/botbot/2.png" },
