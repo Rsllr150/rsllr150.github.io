@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Nav } from "@/components/nav"
 import { experienceDetails } from "@/data/experience-detail"
-import { projectDetails } from "@/data/project-detail"
+import { projectDetails, resolveProjectAssetHref } from "@/data/project-detail"
 import { site } from "@/data/site"
 import { ProjectDownloadLinks } from "@/components/project-download-links"
 import DecryptedText from "@/components/decrypted-text"
@@ -193,6 +193,13 @@ function App() {
               render={<a href={site.linkedin} target="_blank" rel="noopener noreferrer" />}
             >
               LinkedIn
+            </Button>
+            <Button
+              variant="outline"
+              className="rounded-none"
+              render={<a href={resolveProjectAssetHref(site.resume)} target="_blank" rel="noopener noreferrer" />}
+            >
+              Resume (PDF)
             </Button>
           </div>
         </section>

@@ -8,6 +8,7 @@ export const site = {
   email: "romain_seiller@berkeley.edu",
   github: "https://github.com/Rsllr150",
   linkedin: "https://www.linkedin.com/in/romain-seiller-891420257/",
+  resume: "resume-romain-seiller.pdf",
   posterCredit: "Romain Seiller · UC Berkeley · Arts et Métiers · Dauphine PSL",
   description: "Romain Seiller — French engineer. Data, ML, CS, fluid mechanics. UC Berkeley, Arts et Métiers, Dauphine PSL.",
 }

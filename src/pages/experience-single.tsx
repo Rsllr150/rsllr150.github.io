@@ -4,6 +4,7 @@ import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
 import { Nav } from "@/components/nav"
 import { ExperienceImageCard } from "@/components/experience-image-card"
+import { ExperienceFigures } from "@/components/experience-figures"
 import { experienceDetails, getExperienceBySlug } from "@/data/experience-detail"
 import { resolveProjectAssetHref } from "@/data/project-detail"
 import { site } from "@/data/site"
@@ -105,8 +106,9 @@ export default function ExperienceSinglePage({ slug }: Props) {
 
           {exp.metrics.length > 0 ? (
           <dl
-            className="mb-8 grid gap-px border border-border bg-border"
-            style={{ gridTemplateColumns: `repeat(${exp.metrics.length}, minmax(0, 1fr))` }}
+            className={`mb-8 grid gap-px border border-border bg-border ${
+              exp.metrics.length >= 4 ? "grid-cols-2 sm:grid-cols-4" : "grid-cols-3"
+            }`}
           >
             {exp.metrics.map((m) => (
               <div key={m.label} className="bg-background/90 px-3 py-4 text-center">
@@ -142,6 +144,8 @@ export default function ExperienceSinglePage({ slug }: Props) {
               ))}
             </ul>
           </div>
+
+          <ExperienceFigures slug={exp.slug} />
 
           {galleryItemsOnDisk.length > 0 ? (
             <div>
@@ -184,6 +188,13 @@ export default function ExperienceSinglePage({ slug }: Props) {
               render={<a href={site.linkedin} target="_blank" rel="noopener noreferrer" />}
             >
               LinkedIn
+            </Button>
+            <Button
+              variant="outline"
+              className="rounded-none"
+              render={<a href={resolveProjectAssetHref(site.resume)} target="_blank" rel="noopener noreferrer" />}
+            >
+              Resume (PDF)
             </Button>
           </div>
         </section>
