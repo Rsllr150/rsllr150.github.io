@@ -39,6 +39,24 @@ export function resolveProjectAssetHref(href: string): string {
 
 export const projectDetails: ProjectDetail[] = [
   {
+    slug: "maskon",
+    title: "MaskON",
+    subtitle: "PII detection and masking for French formats — checksum-validated, measured, streamable",
+    year: "2026",
+    venue: "Personal systems project",
+    tags: ["Python", "FastAPI", "PII", "Property Testing"],
+    repoHref: "https://github.com/Rsllr150/maskON",
+    abstract:
+      "Send MaskON text, it returns the same text with the personal data masked plus a report of what it found — to scrub logs, LLM prompts, or shared datasets before they leak in clear. Six detectors specialised in French formats: IBAN, SIREN/SIRET, NIR, bank card, email, phone. Each one is a regex plus a checksum, not a regex alone.",
+    problem:
+      "Homemade regexes are the usual answer and the usual failure: an invoice number shaped like a SIREN gets masked, a lowercase IBAN gets missed, and nobody measures either error. Two harder constraints follow. Streaming a huge log file naively cuts an IBAN across a chunk boundary and both halves survive in clear. And a masked dataset still has to be correlatable — the same customer must yield the same token without revealing the value.",
+    approach:
+      "Every detector is shape plus proof: a regex locates a candidate, a checksum confirms it — Luhn for cards, mod 97 for IBANs, the control key for NIR. Each finding carries a confidence (1.0 for a checksum match, lower for shape-only) and the service merges overlapping spans, keeping the most confident. Three masking strategies: label, partial, and an HMAC-SHA256 keyed hash for deterministic tokens. Streaming redacts chunk by chunk with a sliding overlap buffer, so a split PII is still caught. Strict layering — the detection core has zero HTTP dependency, which is what makes it testable. Hypothesis property tests, mypy --strict, Ruff, and a four-gate CI on every push.",
+    outcome:
+      "97% precision, 90% recall, F1 0.93 — by exact span matching on a hand-annotated corpus of 74 examples that deliberately includes lowercase IBANs, parenthesized phones, and order numbers shaped like phones. The checksum types are near-perfect; the residual errors sit on the shape-only detectors, and the corpus tracks them instead of hiding them. Throughput is ~10 MB/s: an earlier O(n²) redaction that rebuilt the whole string per finding was 130× slower, and the benchmark is what caught it. A property test also found the IBAN and CB regexes bridging two adjacent PII into a single span.",
+    gallery: [],
+  },
+  {
     slug: "enedis-data-challenge",
     title: "Enedis — Challenge Data (ENS)",
     subtitle: "Industrial load-curve imputation. Public leaderboard, one metric: MAE.",

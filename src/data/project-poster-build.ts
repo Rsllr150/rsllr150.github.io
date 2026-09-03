@@ -2,4 +2,4 @@
  * Slugs that get a multipage HTML build under `projects/<slug>/`.
  * Keep this list in sync with `projectDetails` in `project-detail.ts` (same order as shown on the site).
  */
-export const PROJECT_POSTER_BUILD_SLUGS = ["enedis-data-challenge", "high-order-acoustics", "botbot"] as const
+export const PROJECT_POSTER_BUILD_SLUGS = ["maskon", "enedis-data-challenge", "high-order-acoustics", "botbot"] as const
