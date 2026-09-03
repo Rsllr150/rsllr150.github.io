@@ -29,7 +29,7 @@ export type ProjectDetail = {
   gallery: ProjectGalleryItem[]
 }
 
-/** Resolve a `public/` asset URL (PDFs, images). Relative paths use Vite `base` (e.g. /blog/). */
+/** Resolve a `public/` asset URL (PDFs, images). Relative paths use Vite `base` (e.g. /). */
 export function resolveProjectAssetHref(href: string): string {
   if (/^https?:\/\//i.test(href.trim())) return href.trim()
   const base = import.meta.env.BASE_URL.replace(/\/?$/, "/")

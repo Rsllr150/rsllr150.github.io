@@ -16,7 +16,7 @@ function projectPosterInputs(): Record<string, string> {
 }
 
 export default defineConfig({
-  base: "/blog/",
+  base: "/",
   plugins: [react(), tailwindcss(), paperAvailabilityPlugin(), imageAvailabilityPlugin()],
   resolve: {
     alias: {
