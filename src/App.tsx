@@ -84,9 +84,21 @@ function App() {
         {/* About */}
         <section id="about" className="mb-16">
           <SectionTitle>About</SectionTitle>
-          <p className="max-w-prose text-sm leading-relaxed text-muted-foreground">
-            {site.about}
-          </p>
+          <div className="max-w-prose space-y-4">
+            {site.about.split("\n\n").map((paragraph) => (
+              <p key={paragraph.slice(0, 48)} className="text-sm leading-relaxed text-muted-foreground">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+          <figure className="mt-6 max-w-prose border-l-2 border-foreground/25 pl-4">
+            <blockquote className="text-sm italic leading-relaxed text-foreground/80">
+              &ldquo;{site.quote.text}&rdquo;
+            </blockquote>
+            <figcaption className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+              {site.quote.source}
+            </figcaption>
+          </figure>
         </section>
 
         <Separator className="mb-16" />

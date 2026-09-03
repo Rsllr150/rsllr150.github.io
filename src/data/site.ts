@@ -4,7 +4,12 @@ export const site = {
   schools: "UC Berkeley · Arts et Métiers · Dauphine PSL",
   specializations: "Data · ML · CS · Fluid Mechanics",
   about:
-    "MEng at Berkeley (Applied Science and Technology), after Arts et Métiers and Dauphine. I build production systems around models and messy data: scoring APIs, trading tools, time-series pipelines, and concurrent browser workers.",
+    "MEng at Berkeley (Applied Science and Technology), after Arts et Métiers and Dauphine. I build production systems around models and messy data: scoring APIs, trading tools, time-series pipelines, and concurrent browser workers.\n\n" +
+    "The part I actually like is the part that isn't technical. Most of what I am proud of came out of arguing with someone who thinks nothing like I do — a trader, a compliance officer, a physicist — until the problem stopped looking the way it had looked to either of us alone. I learn fastest from people whose instincts are the opposite of mine, and I would rather be the least knowledgeable person in the room than the only one talking.",
+  quote: {
+    text: "Truth is lived, not taught.",
+    source: "Hermann Hesse, The Glass Bead Game",
+  },
   email: "romain_seiller@berkeley.edu",
   github: "https://github.com/Rsllr150",
   linkedin: "https://www.linkedin.com/in/romain-seiller-891420257/",
