@@ -33,27 +33,33 @@ export type ExperienceDetail = {
 export const experienceDetails: ExperienceDetail[] = [
   {
     slug: "cirkles",
-    title: "Founding Software Engineer",
+    title: "Founding Engineer",
     org: "Cirkles.ai",
     location: "Paris, France (Remote)",
-    duration: "July 2025 — Present",
-    blurb: "Founding team of an AI fraud-detection SaaS for leasing and banking — backend, data, and AI, end to end.",
-    constraint: "Early-stage means the whole product is your surface — the backend, the data, the model, and the client call.",
-    metrics: [],
+    duration: "June 2025 \u2014 Present",
+    blurb:
+      "Founding engineer on a seed-funded RegTech: a B2B fraud-scoring platform from 0 to 1, now scoring for paying clients across European equipment leasing.",
+    constraint:
+      "A bank cannot act on a score it cannot explain. Every point of risk has to trace back to a fact a compliance officer can read, challenge, and sign off on \u2014 which rules out the model that would have been easiest to ship.",
+    metrics: [
+      { value: "500k+", label: "companies scored" },
+      { value: "+35%", label: "accuracy vs incumbent" },
+      { value: "20+", label: "tenants in prod" },
+      { value: "$550k", label: "raised" },
+    ],
     owned: [
-      "Backend architecture in FastAPI, and the database design that holds the data securely",
-      "Data engineering and web scraping pipelines that feed the detection systems",
-      "Model research on the AI side — fraud detection that has to hold up in real banking scenarios",
-      "Direct client work, turning feedback into product decisions",
-      "An MCP (Model Context Protocol) tool integrated into the main Cirkles platform",
+      "The scoring engine: Explainable Boosting Machine plus declarative rules \u2014 35% more accurate than the incumbent, and every score carries per-feature decision traces compliance can audit",
+      "Multi-tenant FastAPI / MongoDB backend with real-time scoring APIs, fed by async ETL over OSINT and corporate-registry sources",
+      "Infrastructure on Kubernetes \u2014 Helm, Terraform, ArgoCD, OVHcloud \u2014 under bank-grade constraints, with 20+ tenants in production",
+      "An MCP (Model Context Protocol) tool integrated into the main platform",
+      "Client calls, and the translation from what a leasing risk team complains about into what we build next",
     ],
     description:
-      "I joined Cirkles.ai from the very beginning, as part of the founding team. We are building an AI fraud-detection SaaS designed specifically for leasing and banking companies. It is a really exciting environment: we are now actively deploying our production product to our first clients.\n\n" +
-      "Being there since day one means I got to participate in building the entire software product from end to end. Because it is an early-stage startup, my technical work covers a lot of different areas. I built the backend architecture using FastAPI and designed the databases that handle the information securely. A large part of my time went into data engineering and web scraping — gathering and shaping the data our systems actually run on.\n\n" +
-      "On the AI side I was involved in model research, making sure our fraud-detection algorithms are accurate and ready for real-world banking scenarios rather than only for a clean dataset. Besides the pure engineering work, I interact directly with our clients: it is how I learn what the product is missing, and their feedback is what decides where it goes next.\n\n" +
-      "Most recently, my main focus has been developing an MCP (Model Context Protocol) tool to integrate directly into our main Cirkles software platform.\n\n" +
-      "This role has given me incredible hands-on experience in the thing I care about most: taking a complex AI idea and turning it into a live product that companies actually pay for and use.",
-    tags: ["FastAPI", "AI", "SaaS", "Data Engineering", "MCP"],
+      "Three engineers, zero product, one bet: that leasing and banking risk teams would pay for a fraud score they could actually defend. Eighteen months later it is in production with paying clients across European equipment leasing, 500,000+ company checks scored, and $550k raised.\n\n" +
+      "The constraint shaped everything. A gradient-boosted black box would have been faster to build and impossible to sell \u2014 when a leasing company declines an application, someone has to be able to say why, to the applicant and to a regulator. So the engine is an Explainable Boosting Machine layered with declarative rules: additive by construction, so the contribution of every feature is a number you can read off directly, not a post-hoc approximation of one. It beats the incumbent by 35% on accuracy and, unlike the incumbent, it shows its work.\n\n" +
+      "Underneath that sits the part nobody demos: a multi-tenant FastAPI and MongoDB backend serving real-time scoring APIs, fed by async ETL over OSINT sources and corporate registries that are slow, rate-limited, inconsistently formatted, and occasionally just wrong. Most of the accuracy lives in that pipeline rather than in the model.\n\n" +
+      "I own the infrastructure too \u2014 Kubernetes with Helm, Terraform, and ArgoCD on OVHcloud, under bank-grade constraints, 20+ tenants in production. Being there from day one means the whole surface is yours: the model, the pipeline, the cluster, and the client call where you find out which of the three was actually the problem.",
+    tags: ["Explainable Boosting", "FastAPI", "MongoDB", "Kubernetes", "MCP"],
     gallery: [],
   },
   {
@@ -94,7 +100,7 @@ export const experienceDetails: ExperienceDetail[] = [
   },
   {
     slug: "oddo-bhf",
-    title: "Data Trading & Execution Intern",
+    title: "Data & Execution Intern",
     org: "ODDO BHF",
     location: "Paris, France",
     duration: "June 2024 — December 2024",

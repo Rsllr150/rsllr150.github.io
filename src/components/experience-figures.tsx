@@ -1,3 +1,4 @@
+import { ContributionFigure, type Contribution } from "@/components/contribution-figure"
 import { LineFigure } from "@/components/line-figure"
 
 const round1 = (v: number) => Math.round(v * 10) / 10
@@ -30,6 +31,62 @@ const isPaced = ORDER_SIZE.map((x) => round1(6 + 0.38 * x - (0.3 + 0.046 * x)))
 
 const SCHEMATIC =
   "Schematic: the curve shapes illustrate the mechanism, not desk data — bank output stays inside the bank. The headline figures quoted below each figure are the measured out-of-sample results."
+
+/* ------------------------------------------------------------------ */
+/* Cirkles — an EBM decision trace for one scored company              */
+/* ------------------------------------------------------------------ */
+
+const TRACE: Contribution[] = [
+  {
+    feature: "Dissolved-entity directors",
+    value: 18,
+    evidence: "Director is also an officer at 3 companies dissolved within the last 24 months.",
+  },
+  {
+    feature: "Shared registered address",
+    value: 12,
+    evidence: "41 active companies share this registered address; none share a filing agent.",
+  },
+  {
+    feature: "Filing gap",
+    value: 9,
+    evidence: "No statutory accounts filed for 19 months; last filing was itself 4 months late.",
+  },
+  {
+    feature: "Sector base rate",
+    value: 4,
+    evidence: "Equipment leasing, prior probability from the tenant's own historical book.",
+  },
+  {
+    feature: "VAT active and consistent",
+    value: -6,
+    evidence: "VAT number active and matching the registry record on name and address.",
+  },
+  {
+    feature: "Continuous trading history",
+    value: -11,
+    evidence: "6 years of continuous trading with no dormant periods and no officer churn.",
+  },
+]
+
+function CirklesFigures() {
+  return (
+    <div>
+      <h3 className="mb-6 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-foreground/45">
+        <span className="text-foreground/25">{">"}</span> How it works
+      </h3>
+
+      <ContributionFigure
+        title="Every score decomposes into facts a compliance officer can challenge"
+        subtitle="An Explainable Boosting Machine is additive by construction: the score is the base rate plus one term per feature, so each contribution below is read straight off the model rather than approximated after the fact. Hover a row for the trace that produced it — that string is what ends up in the audit log, and what a declined applicant is entitled to hear."
+        contributions={TRACE}
+        baseScore={30}
+        threshold={{ value: 50, label: "manual review" }}
+        note="Illustrative company, real feature set and real mechanism — client data stays with the client. The engine scores 35% more accurately than the incumbent it replaced, across 500,000+ company checks."
+      />
+    </div>
+  )
+}
 
 function CmCicFigures() {
   return (
@@ -88,6 +145,7 @@ function CmCicFigures() {
 }
 
 export function ExperienceFigures({ slug }: { slug: string }) {
+  if (slug === "cirkles") return <CirklesFigures />
   if (slug === "cm-cic") return <CmCicFigures />
   return null
 }

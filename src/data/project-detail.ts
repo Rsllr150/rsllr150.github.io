@@ -60,7 +60,7 @@ export const projectDetails: ProjectDetail[] = [
     slug: "enedis-data-challenge",
     title: "Enedis — Challenge Data (ENS)",
     subtitle: "Industrial load-curve imputation. Public leaderboard, one metric: MAE.",
-    year: "2026",
+    year: "2025",
     venue: "Challenge Data · École Normale Supérieure — Enedis",
     tags: ["Time Series", "KNN", "XGBoost", "Python"],
     posterHref: "papers/enedis-data-challenge-poster.pdf",
