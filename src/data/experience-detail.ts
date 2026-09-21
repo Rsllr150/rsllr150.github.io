@@ -64,7 +64,7 @@ export const experienceDetails: ExperienceDetail[] = [
   },
   {
     slug: "cm-cic",
-    title: "Buy-Side ML Intern",
+    title: "Junior Data Scientist, Buy-Side",
     org: "CM-CIC",
     location: "Paris, France",
     duration: "January 2025 \u2014 June 2025",
@@ -81,14 +81,14 @@ export const experienceDetails: ExperienceDetail[] = [
     owned: [
       "Bayesian neural network forecasting permanent and temporary market impact, trained on 4 years of equity and fixed-income flow \u2014 R\u00b2 0.68, MAE 1.4 bps, NLL 25% below deterministic baselines",
       "An execution-pacing model that reads the predictive variance and curtails participation under high epistemic uncertainty \u2014 mean implementation shortfall down 1.8 bps on large meta-orders",
-      "Production Python the desk runs daily: the model ships as a callable, not a notebook handed over at the end of the internship",
+      "Production Python the desk runs daily: the model ships as a callable the equity process imports, not a notebook handed over at the end",
       "A cross-desk fixed-income automation tool built on Bloomberg API grey-market data, improving execution on the FI side",
     ],
     description:
       "Buy-side, between research and execution. The brief was not \u201ctry Bayesian methods.\u201d It was: make the posterior something the equity process can call.\n\n" +
       "The model forecasts market impact in two parts \u2014 the temporary component you pay for demanding liquidity now, and the permanent component the market keeps \u2014 from four years of equity and fixed-income flow. Out-of-sample it lands at R\u00b2 0.68 and 1.4 bps MAE, with negative log-likelihood 25% below the deterministic baselines it replaced. That last number is the one that matters: it says the uncertainty is calibrated, not just the mean.\n\n" +
       "Which is the whole point, because the variance is the product. A schedule that only knows the expected impact overtrades exactly when the model is furthest outside its training distribution. Feeding the predictive variance back into pacing \u2014 curtail participation when epistemic uncertainty is high \u2014 cut mean implementation shortfall by 1.8 bps on large meta-orders.\n\n" +
-      "Same bar on fixed income: a cross-desk automation tool on Bloomberg API grey-market data that the desk actually runs, not a script that needs a babysitter. The internships that stick are the ones where the handoff is a workflow, not a slide.",
+      "Same bar on fixed income: a cross-desk automation tool on Bloomberg API grey-market data that the desk actually runs, not a script that needs a babysitter. The work that sticks is the work that leaves a workflow behind, not a slide.",
     tags: ["Bayesian ML", "PyTorch", "Market Impact", "Execution", "Fixed Income"],
     gallery: [
       {
@@ -100,7 +100,7 @@ export const experienceDetails: ExperienceDetail[] = [
   },
   {
     slug: "oddo-bhf",
-    title: "Data & Execution Intern",
+    title: "Data & Execution Analyst",
     org: "ODDO BHF",
     location: "Paris, France",
     duration: "June 2024 — December 2024",
