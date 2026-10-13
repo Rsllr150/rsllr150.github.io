@@ -10,6 +10,8 @@ import { site } from "@/data/site"
 import { ProjectDownloadLinks } from "@/components/project-download-links"
 import DecryptedText from "@/components/decrypted-text"
 import { ResumeChip } from "@/components/resume-chip"
+import { AwardBadge } from "@/components/award-badge"
+import { isGalleryImageFileAvailable } from "@/lib/gallery-image-available"
 
 import { ErrorBoundary } from "@/components/error-boundary"
 
@@ -78,6 +80,33 @@ function App() {
               Focus
             </dt>
             <dd className="text-pretty text-muted-foreground">{site.specializations}</dd>
+            <dt className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-foreground/40">
+              Now
+            </dt>
+            <dd>
+              <a
+                href={`${import.meta.env.BASE_URL}experience/${site.now.experienceSlug}/`}
+                className="text-foreground no-underline underline-offset-4 hover:underline"
+              >
+                <span className="font-semibold">{site.now.role}</span>
+                <span className="text-muted-foreground"> @ {site.now.org}</span>
+              </a>
+              <span className="mt-0.5 block font-mono text-[11px] text-foreground/70">{site.now.proof}</span>
+            </dd>
+            <dt className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-foreground/40">
+              Awards
+            </dt>
+            <dd className="flex flex-wrap gap-2 pt-0.5">
+              {site.awards.map((award) => (
+                <a
+                  key={award.projectSlug}
+                  href={`${import.meta.env.BASE_URL}projects/${award.projectSlug}/`}
+                  className="no-underline transition-opacity hover:opacity-80"
+                >
+                  <AwardBadge award={award.label} />
+                </a>
+              ))}
+            </dd>
           </dl>
         </header>
 
@@ -113,7 +142,7 @@ function App() {
                 href={`${import.meta.env.BASE_URL}experience/${exp.slug}/`}
                 className="block min-w-0 no-underline text-inherit"
               >
-                <Card className="cursor-pointer">
+                <Card className="group/exp cursor-pointer overflow-hidden">
                   <CardHeader>
                     <CardTitle>{exp.title}</CardTitle>
                     <CardDescription>
@@ -122,6 +151,17 @@ function App() {
                       <span className="font-mono text-[11px]">{exp.duration}</span>
                     </CardDescription>
                   </CardHeader>
+                  {expCover(exp.gallery) ? (
+                    <div className="-mx-4 overflow-hidden border-y border-border bg-[#F4F1EA]">
+                      <img
+                        src={resolveProjectAssetHref(expCover(exp.gallery)!)}
+                        alt=""
+                        className="aspect-[2/1] w-full object-cover object-top transition-transform duration-500 group-hover/exp:scale-[1.03]"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  ) : null}
                   <CardContent className="min-w-0 space-y-3">
                     <p className="text-sm leading-relaxed text-muted-foreground">{exp.blurb}</p>
                     {exp.metrics.length > 0 ? (
@@ -151,8 +191,11 @@ function App() {
           <div className="grid gap-4">
             {projectDetails.map((project) => {
               const posterPageHref = `${import.meta.env.BASE_URL}projects/${project.slug}/`
+              const cover = project.gallery.find(
+                (item) => item.imageHref && isGalleryImageFileAvailable(item.imageHref),
+              )
               return (
-                <Card key={project.slug}>
+                <Card key={project.slug} className="group/project overflow-hidden">
                   <CardHeader>
                     <CardTitle>
                       <a href={posterPageHref} className="text-inherit no-underline hover:underline">
@@ -161,7 +204,24 @@ function App() {
                     </CardTitle>
                     <CardDescription>{project.subtitle}</CardDescription>
                   </CardHeader>
+                  {cover ? (
+                    <a
+                      href={posterPageHref}
+                      className="-mx-4 block overflow-hidden border-y border-border bg-[#F4F1EA]"
+                      tabIndex={-1}
+                      aria-hidden
+                    >
+                      <img
+                        src={resolveProjectAssetHref(cover.imageHref!)}
+                        alt=""
+                        className="aspect-[2/1] w-full object-cover object-top transition-transform duration-500 group-hover/project:scale-[1.03]"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </a>
+                  ) : null}
                   <CardContent className="space-y-4">
+                    {project.award ? <AwardBadge award={project.award} /> : null}
                     <div className="flex flex-wrap gap-2">
                       {project.tags.map((tag) => (
                         <Badge key={tag} variant="outline" className="rounded-none text-xs">
@@ -236,6 +296,11 @@ function App() {
       <Nav />
     </div>
   )
+}
+
+/** First gallery image that exists under public/ at build time. */
+function expCover(gallery: { imageHref?: string }[]): string | undefined {
+  return gallery.find((item) => item.imageHref && isGalleryImageFileAvailable(item.imageHref))?.imageHref
 }
 
 function SectionTitle({ children }: { children: ReactNode }) {
