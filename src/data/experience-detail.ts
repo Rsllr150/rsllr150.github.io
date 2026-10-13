@@ -45,7 +45,7 @@ export const experienceDetails: ExperienceDetail[] = [
       { value: "500k+", label: "companies scored" },
       { value: "+35%", label: "accuracy vs incumbent" },
       { value: "20+", label: "tenants in prod" },
-      { value: "$550k", label: "raised" },
+      { value: "Seed", label: "raised" },
     ],
     owned: [
       "The scoring engine: Explainable Boosting Machine plus declarative rules \u2014 35% more accurate than the incumbent, and every score carries per-feature decision traces compliance can audit",
@@ -55,7 +55,7 @@ export const experienceDetails: ExperienceDetail[] = [
       "Client calls, and the translation from what a leasing risk team complains about into what we build next",
     ],
     description:
-      "Three engineers, zero product, one bet: that leasing and banking risk teams would pay for a fraud score they could actually defend. Eighteen months later it is in production with paying clients across European equipment leasing, 500,000+ company checks scored, and $550k raised.\n\n" +
+      "Three engineers, zero product, one bet: that leasing and banking risk teams would pay for a fraud score they could actually defend. Today it is in production with paying clients across European equipment leasing, 500,000+ company checks scored, and a seed round raised.\n\n" +
       "The constraint shaped everything. A gradient-boosted black box would have been faster to build and impossible to sell \u2014 when a leasing company declines an application, someone has to be able to say why, to the applicant and to a regulator. So the engine is an Explainable Boosting Machine layered with declarative rules: additive by construction, so the contribution of every feature is a number you can read off directly, not a post-hoc approximation of one. It beats the incumbent by 35% on accuracy and, unlike the incumbent, it shows its work.\n\n" +
       "Underneath that sits the part nobody demos: a multi-tenant FastAPI and MongoDB backend serving real-time scoring APIs, fed by async ETL over OSINT sources and corporate registries that are slow, rate-limited, inconsistently formatted, and occasionally just wrong. Most of the accuracy lives in that pipeline rather than in the model.\n\n" +
       "I own the infrastructure too \u2014 Kubernetes with Helm, Terraform, and ArgoCD on OVHcloud, under bank-grade constraints, 20+ tenants in production. Being there from day one means the whole surface is yours: the model, the pipeline, the cluster, and the client call where you find out which of the three was actually the problem.",
@@ -93,8 +93,8 @@ export const experienceDetails: ExperienceDetail[] = [
     gallery: [
       {
         id: "m1",
-        caption: "Research \u2192 production \u2014 two desks, one handoff rule",
-        imageHref: "images/experience/cm-cic/1.png",
+        caption: "Impact with its uncertainty \u2014 the posterior sets the pace",
+        imageHref: "images/experience/cm-cic/1.svg",
       },
     ],
   },
@@ -123,8 +123,8 @@ export const experienceDetails: ExperienceDetail[] = [
     gallery: [
       {
         id: "o1",
-        caption: "Fill → P&L / TCA — same day, same numbers",
-        imageHref: "images/experience/oddo-bhf/1.png",
+        caption: "Fill → P&L / TCA the same day, and back into the algo choice",
+        imageHref: "images/experience/oddo-bhf/1.svg",
       },
     ],
   },
