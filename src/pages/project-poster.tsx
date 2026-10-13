@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Nav } from "@/components/nav"
 import { ExperienceImageCard } from "@/components/experience-image-card"
 import { ProjectDownloadLinks } from "@/components/project-download-links"
+import { AwardBadge } from "@/components/award-badge"
 import { getProjectBySlug, projectDetails, resolveProjectAssetHref } from "@/data/project-detail"
 import { site } from "@/data/site"
 import { isGalleryImageFileAvailable } from "@/lib/gallery-image-available"
@@ -22,6 +23,8 @@ export default function ProjectPosterPage({ slug }: Props) {
   const baseUrl = import.meta.env.BASE_URL
   const homeUrl = `${baseUrl}`
   const others = projectDetails.filter((p) => p.slug !== slug)
+  const index = projectDetails.findIndex((p) => p.slug === slug)
+  const next = projectDetails[(index + 1) % projectDetails.length]
 
   const galleryItemsOnDisk = project
     ? project.gallery.filter(
@@ -74,7 +77,7 @@ export default function ProjectPosterPage({ slug }: Props) {
             ← Home
           </a>
           {others.map((other) => (
-            <span key={other.slug}>
+            <span key={other.slug} className="hidden md:inline">
               <span className="mx-2 text-border">/</span>
               <a
                 href={`${baseUrl}projects/${other.slug}/`}
@@ -110,6 +113,11 @@ export default function ProjectPosterPage({ slug }: Props) {
               <p className="mx-auto mt-4 max-w-3xl text-pretty text-sm text-muted-foreground md:text-base">
                 {project.subtitle}
               </p>
+              {project.award ? (
+                <div className="mt-5 flex justify-center">
+                  <AwardBadge award={project.award} className="text-sm" />
+                </div>
+              ) : null}
               <div className="mt-6 flex flex-wrap justify-center gap-2">
                 {project.tags.map((tag) => (
                   <Badge key={tag} variant="outline" className="rounded-none text-xs">
@@ -175,7 +183,7 @@ export default function ProjectPosterPage({ slug }: Props) {
                 <h2 className="mb-4 text-center font-mono text-[10px] font-bold uppercase tracking-[0.35em] text-foreground/45">
                   Figures
                 </h2>
-                <div className="grid gap-4 sm:grid-cols-1 lg:grid-cols-3">
+                <div className={`grid gap-4 sm:grid-cols-1 ${galleryItemsOnDisk.length === 2 ? "lg:grid-cols-2" : "lg:grid-cols-3"}`}>
                   {galleryItemsOnDisk.map((item) => (
                     <ExperienceImageCard
                       key={item.id}
@@ -196,9 +204,12 @@ export default function ProjectPosterPage({ slug }: Props) {
           </div>
         </div>
 
-        <div className="mt-12 text-center">
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-3">
           <Button variant="outline" className="rounded-none" render={<a href={homeUrl} />}>
             Back to portfolio
+          </Button>
+          <Button variant="outline" className="rounded-none" render={<a href={`${baseUrl}projects/${next.slug}/`} />}>
+            Next: {next.title} →
           </Button>
         </div>
       </div>
