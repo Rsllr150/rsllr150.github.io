@@ -17,6 +17,8 @@ export type ProjectDetail = {
   subtitle: string
   year: string
   venue: string
+  /** Prize or ranking, shown as a badge on the card and the poster. Omit when there is none. */
+  award?: string
   tags: string[]
   /** Site-relative path (e.g. papers/foo.pdf) or https URL — files live under `public/` when relative */
   paperHref?: string
@@ -39,6 +41,50 @@ export function resolveProjectAssetHref(href: string): string {
 
 export const projectDetails: ProjectDetail[] = [
   {
+    slug: "geste",
+    title: "Geste",
+    subtitle:
+      "A craftsperson's phone video becomes a dataset a robotics lab can buy.",
+    year: "2026",
+    venue: "B@BHacks 2.0 · Blockchain at Berkeley, Berkeley Haas · 11 October 2026",
+    award: "Winner · 1st place, Most Creative track · B@BHacks 2.0",
+    tags: ["TypeScript", "React", "Gemini", "ElevenLabs", "x402", "AUSD", "Base"],
+    abstract:
+      "Built in about six hours at B@BHacks 2.0 by a team of four: Romain Seiller, Willem Larras, Adnan Ahali, Julius Graf. A pastry chef or a butcher films their workbench and explains out loud what they are doing. Geste turns that video into gesture clips with provenance and consent attached, prices them live per trade, and lets a lab's AI agent buy them. I handled deployment, the frontend, the demo video, and the submission.",
+    problem:
+      "A robotics lab wants recordings of skilled hands at work, cut gesture by gesture and labelled. The people who have those skills have a phone, not a data pipeline. And a clip bought off the internet says nothing about who recorded it or whether they agreed to sell it.",
+    approach:
+      "The pipeline segments the video into timestamped gestures, aligns each one with the transcript, and cuts one clip per gesture. Every clip is hashed into a manifest that the craftsperson signs with EIP-712, so provenance and consent are verifiable. Each trade has a live price driven by supply, demand, and a web signal. The lab's AI agent pays in AUSD over HTTP 402 — gasless, x402 on Base — under a budget it cannot exceed.",
+    outcome:
+      "Winner, 1st place, Most Creative track at B@BHacks 2.0 (Blockchain at Berkeley, Berkeley Haas, 11 October 2026). My first hackathon. 70% of every sale goes to the craftsperson. The code and the demo stay private while we keep building.",
+    gallery: [
+      { id: "ge0", caption: "The live app — artisan films on a phone, the lab buys on a crypto market", imageHref: "images/projects/geste/app.png" },
+      { id: "ge1", caption: "From the workbench to the lab — film, segment, align, clip, sign", imageHref: "images/projects/geste/1.svg" },
+      { id: "ge2", caption: "Lab side — live price per trade, HTTP 402, AUSD over x402 on Base", imageHref: "images/projects/geste/2.svg" },
+    ],
+  },
+  {
+    slug: "agentic-wave",
+    title: "agentic-wave",
+    subtitle: "Coding with agents under machine guards — one planner, a swarm of coders in a tmux mosaic, a 0/1 gate before anything is accepted",
+    year: "2026",
+    venue: "Claude Code plugin · with Nael Ghoundale",
+    tags: ["Python", "Claude Code", "tmux", "Hooks", "CI"],
+    abstract:
+      "A Claude Code plugin, built with Nael Ghoundale, for running a fleet of coding agents without losing control of the repo. One planner session writes briefs and never touches the code; coder agents run in a tmux mosaic you can watch; hooks, exit codes and a gate command hold the rules instead of the prompt. Not a framework — what a month of measured use settled on, packed so it can be installed rather than described.",
+    problem:
+      "Every rule held only by the wording of a prompt was eventually violated — late in a long session, quietly, at the moment it mattered. An agent edits a file nobody declared, a piped test command hides a red suite, two sessions on one laptop share a lot pointer and a review runs git diff in the wrong checkout. Exploration is 63% of an agent's wall time and writing is 3.7%, so the expensive part is not the code; it is the coordination around it.",
+    approach:
+      "The rules that matter are mechanical. A declared perimeter is passed as a flag, so an out-of-perimeter edit is refused by the guard and fails the gate. wave gate runs the slice's own command under pipefail, subtracts what was already dirty, and fails a manifest that moved without its lock. Briefs carry file:line anchors, and the spawner refuses one without. Failures are routed by type: a red test goes back once with the verdict, a violated perimeter goes back to the planner. My share: the animated flow diagrams, drawn from one JSON file and checked in CI so they cannot drift; agent-side guard rules; review staleness and incident filing; per-lot usage accounting; the opt-in OS sandbox for Claude agents; and the eval CI matrix across Linux, macOS, Python 3.9 and 3.13.",
+    outcome:
+      "Used on real lots, including MaskON, with the trials and their evidence kept in the repo. A suite of evals exercises the mechanism — guards, lot rules, confinement, providers. What it does not have yet is said plainly: no eval of the method itself, and one n=1 comparison where the reviewed arm caught a real defect the other missed, at 6.6× the time. The repo is private.",
+    gallery: [
+      { id: "aw1", caption: "The whole workflow — idea to merge, a machine verdict at every step", imageHref: "images/projects/agentic-wave/1.svg" },
+      { id: "aw2", caption: "Guards — what happens to a tool call", imageHref: "images/projects/agentic-wave/2.svg" },
+      { id: "aw3", caption: "Slice states, as the machine derives them", imageHref: "images/projects/agentic-wave/3.svg" },
+    ],
+  },
+  {
     slug: "maskon",
     title: "MaskON",
     subtitle: "PII detection and masking for French formats — checksum-validated, measured, streamable",
@@ -47,14 +93,17 @@ export const projectDetails: ProjectDetail[] = [
     tags: ["Python", "FastAPI", "PII", "Property Testing"],
     repoHref: "https://github.com/Rsllr150/maskON",
     abstract:
-      "Send MaskON text, it returns the same text with the personal data masked plus a report of what it found — to scrub logs, LLM prompts, or shared datasets before they leak in clear. Six detectors specialised in French formats: IBAN, SIREN/SIRET, NIR, bank card, email, phone. Each one is a regex plus a checksum, not a regex alone.",
+      "Send MaskON text, it returns the same text with the personal data masked plus a report of what it found — to scrub logs, LLM prompts, or shared datasets before they leak in clear. Eleven detectors specialised in French formats — IBAN, SIREN, SIRET, VAT, NIR, tax number, bank card, email, phone, passport, licence plate. Every structured type is a regex plus a checksum, not a regex alone.",
     problem:
       "Homemade regexes are the usual answer and the usual failure: an invoice number shaped like a SIREN gets masked, a lowercase IBAN gets missed, and nobody measures either error. Two harder constraints follow. Streaming a huge log file naively cuts an IBAN across a chunk boundary and both halves survive in clear. And a masked dataset still has to be correlatable — the same customer must yield the same token without revealing the value.",
     approach:
-      "Every detector is shape plus proof: a regex locates a candidate, a checksum confirms it — Luhn for cards, mod 97 for IBANs, the control key for NIR. Each finding carries a confidence (1.0 for a checksum match, lower for shape-only) and the service merges overlapping spans, keeping the most confident. Three masking strategies: label, partial, and an HMAC-SHA256 keyed hash for deterministic tokens. Streaming redacts chunk by chunk with a sliding overlap buffer, so a split PII is still caught. Strict layering — the detection core has zero HTTP dependency, which is what makes it testable. Hypothesis property tests, mypy --strict, Ruff, and a four-gate CI on every push.",
+      "Every structured detector is shape plus proof: a regex locates a candidate, a checksum confirms it — Luhn for cards and SIREN, mod 97 for IBANs, the control key for NIR, mod 511 for the tax number. Each finding carries a confidence (1.0 for a checksum match, lower for shape-only) and the service merges overlapping spans, keeping the most confident. Three masking strategies: label, partial, and an HMAC-SHA256 keyed hash for deterministic tokens. Streaming redacts chunk by chunk with a sliding overlap buffer, so a split PII is still caught. Strict layering — the detection core has zero HTTP dependency, which is what makes it testable. Hypothesis property tests, mypy --strict, Ruff, and a four-gate CI on every push.",
     outcome:
-      "97% precision, 90% recall, F1 0.93 — by exact span matching on a hand-annotated corpus of 74 examples that deliberately includes lowercase IBANs, parenthesized phones, and order numbers shaped like phones. The checksum types are near-perfect; the residual errors sit on the shape-only detectors, and the corpus tracks them instead of hiding them. Throughput is ~10 MB/s: an earlier O(n²) redaction that rebuilt the whole string per finding was 130× slower, and the benchmark is what caught it. A property test also found the IBAN and CB regexes bridging two adjacent PII into a single span.",
-    gallery: [],
+      "98% precision, 93% recall, F1 0.95 — by exact span matching on a hand-annotated corpus of 99 examples that deliberately includes lowercase IBANs, parenthesized phones, and order numbers shaped like phones. The checksum types are near-perfect; the residual errors sit on the shape-only detectors, and the corpus tracks them instead of hiding them. Throughput is ~10 MB/s: an earlier O(n²) redaction that rebuilt the whole string per finding was 130× slower, and the benchmark is what caught it. A property test also found the IBAN and CB regexes bridging two adjacent PII into a single span, and a ReDoS test caught an email regex that took ~45 min on 1 MB of hostile input — now ~10 ms.",
+    gallery: [
+      { id: "mk1", caption: "Shape, then proof — detect, confirm, merge, mask", imageHref: "images/projects/maskon/1.svg" },
+      { id: "mk2", caption: "Streaming — a 64-char overlap buffer catches a split IBAN", imageHref: "images/projects/maskon/2.svg" },
+    ],
   },
   {
     slug: "enedis-data-challenge",
@@ -62,6 +111,7 @@ export const projectDetails: ProjectDetail[] = [
     subtitle: "Industrial load-curve imputation. Public leaderboard, one metric: MAE.",
     year: "2025",
     venue: "Challenge Data · École Normale Supérieure — Enedis",
+    award: "Top 25 · public leaderboard",
     tags: ["Time Series", "KNN", "XGBoost", "Python"],
     posterHref: "papers/enedis-data-challenge-poster.pdf",
     abstract:

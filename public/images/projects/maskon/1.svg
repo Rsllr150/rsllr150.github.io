@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="1200" height="620" role="img" aria-labelledby="t d" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace">
+<title id="t">MaskON — shape, proof, merge, mask</title>
+<desc id="d">A regex locates a candidate, a checksum confirms it (Luhn, mod 97, NIR key, SPI mod 511), overlapping spans are merged keeping the most confident, and the text is masked with a label, a partial mask or a keyed hash. Measured on 99 annotated examples: precision 98%, recall 93%, F1 0.95.</desc>
+<defs>
+  <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#C8102E" stroke-width="1.2" opacity=".35"/></pattern>
+  <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1 L9 5 L1 9 Z" fill="#141414"/></marker>
+  <style>
+    .k{font-size:11px;letter-spacing:.2em;fill:#7A766E}
+    .h{font-size:19px;font-weight:700;fill:#141414}
+    .s{font-size:13px;fill:#4A4740}
+  </style>
+</defs>
+<rect width="1200" height="620" fill="#F5F3EE"/>
+<rect x="24" y="24" width="1152" height="572" fill="none" stroke="#141414" stroke-width="1.2"/>
+<rect x="30" y="30" width="1140" height="560" fill="none" stroke="#141414" stroke-width=".5"/>
+
+<text x="60" y="72" class="k">MASKON / DETECTION PIPELINE / FR-PII</text>
+<text x="60" y="108" font-size="28" font-weight="700" fill="#141414">Shape, then proof.</text>
+<g transform="translate(1040 92) rotate(-8)">
+  <rect x="-78" y="-26" width="156" height="48" fill="none" stroke="#C8102E" stroke-width="2.4"/>
+  <rect x="-72" y="-20" width="144" height="36" fill="none" stroke="#C8102E" stroke-width="1"/>
+  <text x="0" y="6" text-anchor="middle" font-size="18" font-weight="700" fill="#C8102E" letter-spacing=".22em">MASKED</text>
+</g>
+
+<!-- input -->
+<text x="60" y="152" class="k">IN</text>
+<rect x="100" y="134" width="720" height="30" fill="#FFFFFF" stroke="#141414" stroke-width=".8"/>
+<text x="114" y="154" font-size="14.5" fill="#141414">Contact Jean au <tspan fill="#C8102E">06 12 34 56 78</tspan>, IBAN <tspan fill="#C8102E">FR76 3000 6000 0112 3456 7890 189</tspan></text>
+
+<!-- stages -->
+<g transform="translate(60 196)">
+  <rect width="252" height="248" fill="#FFFFFF" stroke="#141414" stroke-width="1"/>
+  <text x="18" y="30" class="k">01</text><text x="18" y="58" class="h">SHAPE</text>
+  <text x="18" y="84" class="s">A regex locates</text><text x="18" y="102" class="s">a candidate.</text>
+  <g font-size="12.5" fill="#141414">
+    <rect x="18" y="128" width="216" height="26" fill="url(#hatch)" stroke="#C8102E" stroke-width=".8"/><text x="28" y="146">FR76 3000 6000 …</text>
+    <rect x="18" y="164" width="216" height="26" fill="url(#hatch)" stroke="#C8102E" stroke-width=".8"/><text x="28" y="182">06 12 34 56 78</text>
+    <rect x="18" y="200" width="216" height="26" fill="url(#hatch)" stroke="#C8102E" stroke-width=".8"/><text x="28" y="218">invoice 732 829 321</text>
+  </g>
+</g>
+<g transform="translate(332 196)">
+  <rect width="252" height="248" fill="#FFFFFF" stroke="#141414" stroke-width="1"/>
+  <text x="18" y="30" class="k">02</text><text x="18" y="58" class="h">PROOF</text>
+  <text x="18" y="84" class="s">A checksum confirms it.</text><text x="18" y="102" class="s">Shape alone scores lower.</text>
+  <g font-size="12.5" fill="#141414">
+    <text x="18" y="140">Luhn ........ CB</text>
+    <text x="18" y="160">mod 97 ...... IBAN</text>
+    <text x="18" y="180">control key . NIR</text>
+    <text x="18" y="200">mod 511 ..... SPI</text>
+  </g>
+  <text x="18" y="230" font-size="12" fill="#C8102E">✕ SIREN-shaped invoice: rejected</text>
+</g>
+<g transform="translate(604 196)">
+  <rect width="252" height="248" fill="#FFFFFF" stroke="#141414" stroke-width="1"/>
+  <text x="18" y="30" class="k">03</text><text x="18" y="58" class="h">MERGE</text>
+  <text x="18" y="84" class="s">Overlapping spans:</text><text x="18" y="102" class="s">most confident wins.</text>
+  <rect x="18" y="132" width="150" height="20" fill="#141414"/><text x="176" y="147" font-size="12" fill="#141414">1.0</text>
+  <rect x="80" y="160" width="130" height="20" fill="none" stroke="#141414" stroke-dasharray="3 3"/><text x="176" y="198" font-size="12" fill="#7A766E">shape-only</text>
+  <line x1="18" y1="214" x2="234" y2="214" stroke="#141414" stroke-width=".6"/>
+  <rect x="18" y="222" width="150" height="10" fill="#141414"/>
+</g>
+<g transform="translate(876 196)">
+  <rect width="264" height="248" fill="#FFFFFF" stroke="#141414" stroke-width="1"/>
+  <text x="18" y="30" class="k">04</text><text x="18" y="58" class="h">MASK</text>
+  <text x="18" y="84" class="s">Three strategies.</text>
+  <g font-size="12.5" fill="#141414">
+    <text x="18" y="130" fill="#7A766E">label</text><rect x="92" y="117" width="64" height="18" fill="#141414"/><text x="100" y="130" fill="#F5F3EE">[IBAN]</text>
+    <text x="18" y="166" fill="#7A766E">partial</text><text x="92" y="166">FR****0189</text>
+    <text x="18" y="202" fill="#7A766E">hash</text><text x="92" y="202">iban_v1_3fa9c1…</text>
+  </g>
+  <text x="18" y="230" font-size="11" fill="#7A766E">keyed HMAC-SHA256, deterministic</text>
+</g>
+<g stroke="#141414" stroke-width="1.4" marker-end="url(#ar)"><line x1="312" y1="320" x2="328" y2="320"/><line x1="584" y1="320" x2="600" y2="320"/><line x1="856" y1="320" x2="872" y2="320"/></g>
+
+<!-- output -->
+<text x="60" y="490" class="k">OUT</text>
+<rect x="100" y="472" width="720" height="30" fill="#FFFFFF" stroke="#141414" stroke-width=".8"/>
+<text x="114" y="492" font-size="14.5" fill="#141414">Contact Jean au</text>
+<rect x="258" y="478" width="64" height="18" fill="#141414"/><text x="268" y="492" font-size="13" fill="#F5F3EE">[TEL]</text>
+<text x="326" y="492" font-size="14.5" fill="#141414">, IBAN</text>
+<rect x="388" y="478" width="70" height="18" fill="#141414"/><text x="396" y="492" font-size="13" fill="#F5F3EE">[IBAN]</text>
+
+<!-- metrics -->
+<line x1="60" y1="530" x2="1140" y2="530" stroke="#141414" stroke-width=".6"/>
+<g font-size="13" fill="#141414">
+  <text x="60" y="562"><tspan class="k">PRECISION</tspan> <tspan font-size="20" font-weight="700">98%</tspan></text>
+  <text x="270" y="562"><tspan class="k">RECALL</tspan> <tspan font-size="20" font-weight="700">93%</tspan></text>
+  <text x="450" y="562"><tspan class="k">F1</tspan> <tspan font-size="20" font-weight="700">0.95</tspan></text>
+  <text x="590" y="562" fill="#4A4740">99 annotated examples · exact span match · ~10 MB/s</text>
+</g>
+</svg>
